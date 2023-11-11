@@ -11,12 +11,13 @@
   --indigo: #6E07F3;
   --textWhite: #f1f5f9;
   --blackBody: #0f172a;
-  --distanceArticles: 7rem;
+  --distanceArticles: 8rem;
 }
 
 /* Global body settings */
 html  {
  scroll-padding: 9rem;
+ scroll-behavior: smooth;
 }
 
 body {
@@ -24,6 +25,10 @@ body {
   color: var(--textWhite);
   font-family: "Lucida Console", "Courier New", monospace;
   line-height: 1;
+}
+
+p {
+  font-weight: 700;
 }
 
 .mt {
@@ -39,15 +44,30 @@ a {
   color: var(--textWhite);
 }
 
+/* Scroll top button */
+.scrollTopButton {
+  background-color: var(--indigo);
+  color: var(--textWhite);
+  text-align: center;
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  margin: 0 30px 30px 0;
+  padding: 15px;
+  border-radius: 9999px;
+  cursor: pointer;
+  z-index: 9999;
+}
+
 /* Navbar */
 nav {
   display: flex;
-  position: fixed;
   top: 0;
   left: 0;
   right: 0;
   background-color: #020617;
   padding: 30px 50px 30px 50px;
+  animation: fadeDown 1s ease-in;
 }
 
 nav > ul {
@@ -94,7 +114,7 @@ nav > ul > li > a:hover {
   left: 0 !important;
 }
 .menu__btn {
-  position: fixed;
+  position: absolute;
   top: 42px;
   left: 20px;
   width: 26px;
@@ -123,7 +143,7 @@ nav > ul > li > a:hover {
 
 .menu__box {
   display: block;
-  position: fixed;
+  position: absolute;
   top: 0;
   left: -100%;
   width: 250px;
@@ -155,7 +175,7 @@ nav > ul > li > a:hover {
 
 /* Hero article */
 .hero-container {
-  margin-top: 9rem;
+  margin-top: 3rem;
 }
 
 .hero {
@@ -163,21 +183,30 @@ nav > ul > li > a:hover {
   align-items: center;
   flex-wrap: wrap;
   justify-content: center;
-  gap: 4rem;
+  gap: 5rem;
 }
 
 .hero-info {
-  padding: 0 1rem 0 1rem;
+  padding: 0 1.3rem 0 1.3rem;
+  order: 1;
+  animation: fadeRight 1s ease-in;
 }
 
 .hero-info > h1 {
-  font-size: clamp(1rem, 1.7rem, 2.5rem);
+  font-size: clamp(1rem, 2.3rem, 2.5rem);
   font-weight: 900;
   margin-bottom: 1rem;
 }
 
-.hero-info > p {  
-  font-size: clamp(.9rem, .9rem, 1.5rem);
+.dev-text {
+  color: var(--indigo);
+  font-weight: bolder;
+  font-size: clamp(1.8rem, .9rem, 1.5rem);
+}
+
+.personal {  
+  font-size: clamp(.8rem, 1rem, 1.5rem);
+  margin-top: 10px;
   line-height: 1.3;
 }
 
@@ -205,18 +234,17 @@ nav > ul > li > a:hover {
   color: var(--textWhite);
 }
 
+.hero-img {
+  order: 2;
+}
+
 .hero-img img {
   padding-right: 1rem;
   width: 230px;
   height: auto;
   border-radius: 81% 19% 69% 31% / 41% 73% 27% 59% ;
   cursor: pointer;
-  animation: border-animation 6s infinite;
-}
-
-.hero-img img:hover {
- transform: scale(1.05);
- filter: brightness(1.2);
+  animation: border-animation 6s infinite, fade 1s ease-in, fadeLeft 1s ease-in;
 }
 
 @keyframes border-animation {
@@ -240,6 +268,7 @@ nav > ul > li > a:hover {
 .tech-container {
   margin-top: 5rem;
   text-align: center;
+  animation: fadeUp 1s ease-in;
 }
 
 .icon-list {
@@ -299,6 +328,9 @@ nav > ul > li > a:hover {
   hsl(266deg 93% 36%) 82%,
   hsl(266deg 93% 35%) 100%;
   margin-top: var(--distanceArticles);
+  animation: fade 1.5s linear both;
+  animation-timeline: view();
+  animation-range: cover 0% cover 30%;
 }
 
 .about-content {
@@ -323,6 +355,9 @@ nav > ul > li > a:hover {
   align-items: center;
   justify-content: center;
   margin-top: var(--distanceArticles);
+  animation: fade 1.5s linear both;
+  animation-timeline: view();
+  animation-range: cover 0% cover 30%;
 }
 
 .project-list {
@@ -349,11 +384,13 @@ nav > ul > li > a:hover {
 /* Contact article */
 .contact-container {
   margin-top: var(--distanceArticles);
-  text-align: center;
   padding: 0 2rem 0 2rem;
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
+  animation: fade 1.5s linear both;
+  animation-timeline: view();
+  animation-range: cover 0% cover 30%;
 }
 
 .contact-container > h1 {
@@ -368,11 +405,14 @@ nav > ul > li > a:hover {
   font-size: clamp(1rem, 1.4rem, 2.5rem);
 }
 
+.contact-info p {
+  margin-bottom: 0.7rem;
+}
+
 .contact-list {
   display: flex;
-  justify-content: center;
-  margin-top: 2rem;
-  gap: 3rem;
+  margin-top: 1rem;
+  gap: 2rem;
 }
 
 .contact-list > a {
@@ -386,15 +426,9 @@ nav > ul > li > a:hover {
   transform: scale(1.1);
 }
 
-.whats-icon {
-  cursor: pointer;
-  margin-top: 1rem;
-  font-size: 1.2rem;
-}
-
-.whats-icon:hover {
-  color: var(--indigo);
-  transform: scale(1.1);
+.whats-icon, .email-icon {
+  
+  font-size: 0.9rem;
 }
 
 .contact-img > img {
@@ -403,9 +437,15 @@ nav > ul > li > a:hover {
   height: auto;
 }
 
+.smile {
+  color: var(--indigo);
+  font-weight: bold;
+  font-size: 1.2rem;
+}
+
 /* Footer */
 footer {
-  margin-top: 4em;
+  margin-top: var(--distanceArticles);
   background-color: #020617;
   display: flex;
   justify-content: center;
@@ -415,7 +455,7 @@ footer {
 
 
 /* Medias */
-@media screen and (width < 763px) {
+@media screen and (width < 952px) {
   /* Vars changes */
   :root {
     --distanceArticles: 3rem;
@@ -436,7 +476,7 @@ footer {
 
   /* Hero article */
   .hero-container {
-    margin-top: calc(var(--distanceArticles) + 5rem);
+    margin-top: var(--distanceArticles);
     text-align: center;
   }
 
@@ -445,19 +485,31 @@ footer {
     text-align: center;
   }
 
-  .social-icons {
-    justify-content: center;
-  }
-
   .hero {
     gap: 1rem;
   }
 
+  .hero-info {
+    order: 2;
+    text-align: start;
+  }
+
+  .hero-img {
+    order: 1;
+  }
+
+  .hero-img img {
+    width: 290px;
+    height: auto;
+  }
+
   /* Tech article */
   .tech-container{
-    margin-top: 1em;
     gap: 1rem;
     margin-top: var(--distanceArticles);
+    animation: fade 1.5s linear both;
+    animation-timeline: view();
+    animation-range: cover 0% cover 30%;
   }
 
   .tech-item i {
@@ -465,7 +517,70 @@ footer {
   }
 
   /* about article */
+  .about-container {
+    margin-top: var(--distanceArticles);
+  }
+
   .about-content {
     width: 85%;
+  }
+}
+
+/* Global Animations */
+@keyframes fade {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeDown {
+  0% {
+    opacity: 0;
+    transform: translateY(-30px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0px);
+  }
+}
+
+@keyframes fadeLeft {
+  0% {
+    opacity: 0;
+    transform: translateX(30px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateX(0px);
+  }
+}
+
+@keyframes fadeRight {
+  0% {
+    opacity: 0;
+    transform: translateX(-30px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateX(0px);
+  }
+}
+
+@keyframes fadeUp {
+  0% {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0px);
   }
 }
